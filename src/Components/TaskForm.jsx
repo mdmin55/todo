@@ -1,6 +1,5 @@
 import { useState } from 'react'
 import Button from '../Ui/button'
-import axios from 'axios'
 import { BASE_URL, BASE_USER } from '../Unils/Const'
 
 const TaskForm = () => {
@@ -10,16 +9,24 @@ const TaskForm = () => {
 		username: BASE_USER,
 	})
 
-	const add = async (e) => {
+	const addTask = async (e) => {
 		e.preventDefault()
-		await axios.post(`${BASE_URL}/create_task/`, {
-			title: task.title,
-			description: task.description,
-			username: task.username,
+		await fetch(`${BASE_URL}/create_task/`, {
+			method:'POST',
+			headers:{
+				'Content-Type':'application/json'
+			},
+			body:JSON.stringify({
+				title: task.title,
+				description: task.description,
+				username: task.username
+				
 		})
-		history.go(0)
+		
+	})
+	// history.go(0)
 	}
-
+	
 	return (
 		<form className='flex flex-col gap-y-4'>
 			<div className='flex flex-col gap-y-2'>
@@ -46,7 +53,7 @@ const TaskForm = () => {
 					onChange={e => setTask({ ...task, [e.target.name]: e.target.value })}
 				/>
 			</div> */}
-			<Button text={'Добавить'} click={add} />
+			<Button text={'Добавить'} click={addTask} />
 		</form>
 	)
 }

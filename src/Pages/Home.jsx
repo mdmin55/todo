@@ -7,12 +7,13 @@ import Loader from '../Components/Loader'
 
 
 const Home = () => {
-	const [data, setData] = useState()
+	const [data, setData] = useState([])
 	const [loading, setLoading] = useState(true)
 	useEffect(() => {
 		const fetchData = async () => {
 			try {
-				const response = await fetch(`${BASE_URL}/get_all_tasks`);
+				const response = await fetch(`${BASE_URL}/get_all_tasks?limit=100`);
+				
 				const data =await response.json();
 				
 				setData(data);

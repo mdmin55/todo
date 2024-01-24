@@ -7,19 +7,28 @@ import { BASE_URL } from '../Unils/Const.js'
 import PropTypes from 'prop-types';
 
 const Task = ({ username, title, isFinished, id }, key) => {
-	const deleteTask = async e => {
-		e.preventDefault()
-		await fetch.delete(`${BASE_URL}/delete_task?task_id=${id}`)
-		history.go(0)
-	}
+	const deleteTask = async (e) => {
+		e.preventDefault();
+		await fetch(`${BASE_URL}/delete_task?task_id=${id}`, {
+		method: 'DELETE',
+		headers: {
+			'Content-Type': 'application/json'
+		}
+		});
+		history.go(0);
+	};
 
-	const finished = async e => {
+	const finished = async(e) => {
 		e.preventDefault()
-		await fetch.patch(`${BASE_URL}/update_task?task_id=${id}`, {
-			is_finished: true,
-		})
+		await fetch(`${BASE_URL}/update_task?task_id=${id}`, {
+			method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+		body: JSON.stringify({is_finished:true})	
+		});
 		history.go(0)
-	}
+	};
 
 	return (
 		<div className='bg-main p-2 mt-2 rounded-lg' key={key}>
